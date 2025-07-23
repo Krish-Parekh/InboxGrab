@@ -1,6 +1,7 @@
-import { render, screen } from "@testing-library/react";
+import { render, screen, fireEvent } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import LoginCard from "@/components/login-card";
+import * as nextAuth from "next-auth/react"; // Import everything to spy correctly
 
 describe("LoginCard", () => {
 	it("should render the login card", () => {
@@ -27,5 +28,16 @@ describe("LoginCard", () => {
 		expect(
 			screen.getByRole("button", { name: "Sign in with Google" }),
 		).toBeInTheDocument();
+	});
+
+	it("should call signIn when button is clicked", () => {
+		const mockSignIn = jest.fn(); // Create mock
+		jest.spyOn(nextAuth, "signIn").mockImplementation(mockSignIn); // Replace next-auth signIn
+
+		render(<LoginCard />);
+		const button = screen.getByRole("button", { name: "Sign in with Google" });
+		fireEvent.click(button);
+
+		expect(mockSignIn).toHaveBeenCalledWith("google", { callbackUrl: "/" });
 	});
 });
