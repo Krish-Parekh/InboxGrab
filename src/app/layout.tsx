@@ -8,7 +8,7 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-	title: "Gmail Extractor",
+	title: "Inbox Grabber",
 	description: "Extract emails from Gmail",
 };
 
