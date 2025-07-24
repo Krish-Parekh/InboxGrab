@@ -1,7 +1,7 @@
 import { render, screen, fireEvent } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import LoginCard from "@/components/login-card";
-import * as nextAuth from "next-auth/react"; // Import everything to spy correctly
+import * as nextAuth from "next-auth/react";
 
 describe("LoginCard", () => {
 	it("should render the login card", () => {

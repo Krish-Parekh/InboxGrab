@@ -16,6 +16,7 @@ export default function Navbar() {
 			<div className="flex items-center gap-x-4">
 				<Avatar className="size-10 border-2 ring-2 ring-green-400">
 					<AvatarImage
+						data-testid="avatar-image"
 						src={session?.user?.image || ""}
 						alt={session?.user?.name || ""}
 					/>
