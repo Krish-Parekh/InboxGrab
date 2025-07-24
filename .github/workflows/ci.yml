@@ -20,26 +20,22 @@ jobs:
           node-version: 20
           cache: 'npm'
 
-      - name: Install dependencies
-        run: npm install
+      - name: Clean install dependencies
+        run: |
+          rm -rf node_modules package-lock.json yarn.lock
+          npm install
 
-      - name: Patch SWC and LightningCSS
-        run: npx next --help
+      - name: Patch SWC and LightningCSS dependencies
+        run: npx next build || npx next --help
 
-      - name: Build
+      - name: Build project
         run: npm run build
 
-      - name: Run tests with coverage
+      - name: Run tests
         run: npm test -- --coverage
 
-      - name: Upload project snapshot
+      - name: Upload coverage report
         uses: actions/upload-artifact@v4
         with:
-          name: project-snapshot
-          path: |
-            .
-          exclude: |
-            node_modules
-            .git
-            coverage
-            **/*.log
+          name: coverage-report
+          path: coverage/
