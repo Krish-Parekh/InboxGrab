@@ -12,7 +12,11 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { getFirstDayOfYear, getToday } from "@/lib/date";
+import {
+	getFirstDayOfThreeYearsAgo,
+	getFirstDayOfYear,
+	getToday,
+} from "@/lib/date";
 import {
 	Popover,
 	PopoverContent,
@@ -25,8 +29,22 @@ import { cn } from "@/lib/utils";
 
 const formSchema = z.object({
 	from: z.email({ error: "Invalid email address" }),
-	startDate: z.date({ error: "Invalid start date" }),
-	endDate: z.date({ error: "Invalid end date" }),
+	startDate: z
+		.date({ error: "Invalid start date" })
+		.refine(
+			(date) => date >= getFirstDayOfThreeYearsAgo() && date <= getToday(),
+			{
+				message: "Start date must be today or later",
+			},
+		),
+	endDate: z
+		.date({ error: "Invalid end date" })
+		.refine(
+			(date) => date >= getFirstDayOfThreeYearsAgo() && date <= getToday(),
+			{
+				message: "End date must be today or later",
+			},
+		),
 });
 
 export default function SearchForm() {
@@ -44,6 +62,7 @@ export default function SearchForm() {
 	return (
 		<Form {...form}>
 			<form
+				data-testid="search-form"
 				onSubmit={form.handleSubmit(onSubmit)}
 				className="grid grid-cols-3 gap-4 items-center"
 			>
@@ -91,11 +110,13 @@ export default function SearchForm() {
 										<Calendar
 											mode="single"
 											defaultMonth={field.value}
+											disabled={(date) =>
+												date > getToday() || date < getFirstDayOfThreeYearsAgo()
+											}
 											selected={field.value}
 											onSelect={field.onChange}
-											disabled={(date) =>
-												date > new Date() || date < new Date("2000-01-01")
-											}
+											startMonth={getFirstDayOfThreeYearsAgo()}
+											endMonth={getToday()}
 											captionLayout="dropdown"
 											broadcastCalendar={false}
 										/>
@@ -139,10 +160,10 @@ export default function SearchForm() {
 											mode="single"
 											defaultMonth={field.value}
 											selected={field.value}
-											onSelect={field.onChange}
 											disabled={(date) =>
-												date > new Date() || date < new Date("2000-01-01")
+												date > getToday() || date < getFirstDayOfThreeYearsAgo()
 											}
+											onSelect={field.onChange}
 											captionLayout="dropdown"
 											broadcastCalendar={false}
 										/>

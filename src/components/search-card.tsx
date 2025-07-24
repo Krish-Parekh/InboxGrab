@@ -9,7 +9,7 @@ export default function SearchCard() {
 		<Card>
 			<CardHeader className="flex flex-row items-center justify-between">
 				<CardTitle>Search Filters</CardTitle>
-				<Button variant="outline" size="icon">
+				<Button variant="outline" size="icon" data-testid="refresh-button">
 					<RefreshCcwIcon className="w-4 h-4" />
 				</Button>
 			</CardHeader>

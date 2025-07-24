@@ -1,10 +1,4 @@
-import {
-	render,
-	screen,
-	fireEvent,
-	act,
-	waitFor,
-} from "@testing-library/react";
+import { render, screen, fireEvent } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import { SessionProvider } from "next-auth/react";
 import Navbar from "@/components/navbar";
