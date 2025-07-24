@@ -19,11 +19,14 @@ jobs:
           node-version: 20
           cache: 'npm'
 
-      - name: Install dependencies
-        run: npm install
 
-      - name: Build
-        run: npm run build
+      - name: Clean install dependencies
+        run: |
+          rm -rf node_modules package-lock.json yarn.lock
+          npm install
+
+      - name: Patch SWC and LightningCSS
+        run: npx next --help
 
       - name: Run tests with coverage
         run: npm test -- --coverage
