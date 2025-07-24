@@ -9,7 +9,6 @@ on:
 jobs:
   build-and-test:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -20,24 +19,23 @@ jobs:
           node-version: 20
           cache: 'npm'
 
-      - name: Cache Next.js build
-        uses: actions/cache@v4
-        with:
-          path: |
-            ~/.npm
-            ${{ github.workspace }}/.next/cache
-          key: ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json') }}-${{ hashFiles('**/*.js', '**/*.jsx', '**/*.ts', '**/*.tsx') }}
-          restore-keys: |
-            ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json') }}-
+      - name: Install dependencies
+        run: npm install
 
-      - name: Build and Patch SWC and LightningCSS dependencies
-        run: npx next build || npx next --help
+      - name: Patch SWC and LightningCSS
+        run: npx next --help
 
-      - name: Run tests
+      - name: Run tests with coverage
         run: npm test -- --coverage
 
-      - name: Upload coverage report
+      - name: Upload project snapshot
         uses: actions/upload-artifact@v4
         with:
-          name: coverage-report
-          path: coverage/
+          name: project-snapshot
+          path: |
+            .
+          exclude: |
+            node_modules
+            .git
+            coverage
+            **/*.log
