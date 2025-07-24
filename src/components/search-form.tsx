@@ -57,7 +57,9 @@ export default function SearchForm() {
 		},
 	});
 
-	function onSubmit(values: z.infer<typeof formSchema>) {}
+	function onSubmit(values: z.infer<typeof formSchema>) {
+		console.log(values);
+	}
 
 	return (
 		<Form {...form}>
