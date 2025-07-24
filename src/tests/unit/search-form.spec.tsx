@@ -1,11 +1,6 @@
 import SearchForm from "@/components/search-form";
 import "@testing-library/jest-dom";
-import {
-	act,
-	fireEvent,
-	render,
-	screen,
-} from "@testing-library/react";
+import { act, fireEvent, render, screen } from "@testing-library/react";
 
 describe("SearchForm", () => {
 	it("should render the search form", () => {
