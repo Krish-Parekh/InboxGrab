@@ -1,9 +1,17 @@
+"use client";
+
 import MaxWidthContainer from "@/components/max-width-container";
+import Navbar from "@/components/navbar";
+import SearchCard from "@/components/search-card";
+import { SessionProvider } from "next-auth/react";
 
 export default function Home() {
 	return (
-		<MaxWidthContainer>
-			<h1>Hello World</h1>
-		</MaxWidthContainer>
+		<SessionProvider>
+			<MaxWidthContainer>
+				<Navbar />
+				<SearchCard />
+			</MaxWidthContainer>
+		</SessionProvider>
 	);
 }
