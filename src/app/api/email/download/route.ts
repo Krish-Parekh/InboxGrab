@@ -4,13 +4,9 @@ import { z } from "zod";
 import JSZip from "jszip";
 
 const requestFormSchema = z.object({
-	emails: z
-		.object({
-			messageId: z.string(),
-			attachmentId: z.string(),
-		})
-		.array(),
-});
+	messageId: z.string(),
+	attachmentId: z.string(),
+}).array();
 
 const URLs = {
 	GET_MESSAGES: "/users/me/messages",
@@ -57,15 +53,12 @@ async function POST(request: NextRequest) {
 			secret: process.env.NEXTAUTH_SECRET,
 		});
 
-		console.log(token);
-
 		if (!token) {
 			return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 		}
 
-		const { emails } = formDataResult.data;
 		const attachments = await Promise.all(
-			emails.map(async (email) => {
+			formDataResult.data.map(async (email) => {
 				const attachment = await getAttachment(
 					token?.accessToken as string,
 					email.messageId,
