@@ -3,18 +3,27 @@ import { DataTable } from "@/components/table/data-table";
 import { columns } from "@/components/table/columns";
 import { Card, CardHeader, CardContent, CardTitle } from "@/components/ui/card";
 import { IEmailServerResponse } from "@/types/main";
-import { Loader2 } from "lucide-react";
+import { Download, Loader2 } from "lucide-react";
+import { Button } from "./ui/button";
 
 interface IEmailTableProps {
 	data?: IEmailServerResponse;
 	isLoading: boolean;
+	onDownloadAll: () => void;
 }
 
-export default function EmailTable({ data, isLoading }: IEmailTableProps) {
+export default function EmailTable({
+	data,
+	isLoading,
+	onDownloadAll,
+}: IEmailTableProps) {
 	return (
 		<Card>
-			<CardHeader>
+			<CardHeader className="flex flex-row items-center justify-between">
 				<CardTitle>Emails</CardTitle>
+				<Button variant="outline" onClick={onDownloadAll}>
+					<Download className="w-4 h-4" /> Download All
+				</Button>
 			</CardHeader>
 			<CardContent>
 				{isLoading ? (

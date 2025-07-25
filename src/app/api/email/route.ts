@@ -166,7 +166,7 @@ async function POST(request: NextRequest) {
 		);
 
 		const messageDetails = await getMessagesDetails(
-			token?.accessToken || "",
+			token?.accessToken as string,
 			data.messages,
 		);
 		const emails = tranformMessageDetails(messageDetails);

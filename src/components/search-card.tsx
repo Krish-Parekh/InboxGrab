@@ -5,11 +5,7 @@ import { RefreshCcwIcon } from "lucide-react";
 import SearchForm from "@/components/search-form";
 import { IEmailServerRequest } from "@/types/main";
 
-interface ISearchCardProps {
-	onSearch: (data: IEmailServerRequest) => void;
-}
-
-export default function SearchCard({ onSearch }: ISearchCardProps) {
+export default function SearchCard() {
 	return (
 		<Card>
 			<CardHeader className="flex flex-row items-center justify-between">
@@ -19,7 +15,7 @@ export default function SearchCard({ onSearch }: ISearchCardProps) {
 				</Button>
 			</CardHeader>
 			<CardContent>
-				<SearchForm onSearch={onSearch} />
+				<SearchForm />
 			</CardContent>
 		</Card>
 	);

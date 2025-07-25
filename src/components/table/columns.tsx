@@ -2,31 +2,9 @@
 
 import { ColumnDef } from "@tanstack/react-table";
 import { IEmailResponse } from "@/types/main";
-import { Checkbox } from "@/components/ui/checkbox";
+import { Button } from "@/components/ui/button";
 
 export const columns: ColumnDef<IEmailResponse>[] = [
-	{
-		id: "select",
-		header: ({ table }) => (
-			<Checkbox
-				checked={
-					table.getIsAllPageRowsSelected() ||
-					(table.getIsSomePageRowsSelected() && "indeterminate")
-				}
-				onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
-				aria-label="Select all"
-			/>
-		),
-		cell: ({ row }) => (
-			<Checkbox
-				checked={row.getIsSelected()}
-				onCheckedChange={(value) => row.toggleSelected(!!value)}
-				aria-label="Select row"
-			/>
-		),
-		enableSorting: false,
-		enableHiding: false,
-	},
 	{
 		header: "Subject",
 		accessorKey: "subject",
@@ -38,5 +16,19 @@ export const columns: ColumnDef<IEmailResponse>[] = [
 	{
 		header: "Date",
 		accessorKey: "date",
+		cell: ({ row }) => {
+			const date = new Date(row.original.date);
+			return date.toLocaleDateString();
+		},
+	},
+	{
+		header: "Action",
+		cell: ({ row }) => {
+			return (
+				<Button variant="outline" size="sm">
+					Download
+				</Button>
+			);
+		},
 	},
 ];

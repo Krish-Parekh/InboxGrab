@@ -8,6 +8,8 @@ import { SessionProvider } from "next-auth/react";
 import { SWRConfig } from "swr";
 import { useEmailServerMutation } from "@/lib/mutation";
 import { IEmailServerRequest, IEmailServerResponse } from "@/types/main";
+import { useEmailSearchStore } from "@/store/email.store";
+import { useEffect } from "react";
 
 const URL = "/api/email";
 
@@ -17,17 +19,23 @@ export default function Home() {
 		IEmailServerResponse
 	>(URL);
 
-	const onSearch = (data: IEmailServerRequest) => {
-		trigger(data);
-	};
+	useEffect(() => {
+		useEmailSearchStore.getState().setTriggerSearch(trigger);
+	}, [trigger]);
+
+	const onDownloadAll = () => {};
 
 	return (
 		<SWRConfig>
 			<SessionProvider>
 				<MaxWidthContainer className="space-y-4">
 					<Navbar />
-					<SearchCard onSearch={onSearch} />
-					<EmailTable data={data} isLoading={isMutating} />
+					<SearchCard />
+					<EmailTable
+						data={data}
+						isLoading={isMutating}
+						onDownloadAll={onDownloadAll}
+					/>
 				</MaxWidthContainer>
 			</SessionProvider>
 		</SWRConfig>

@@ -26,11 +26,7 @@ import { CalendarIcon } from "lucide-react";
 import { Calendar } from "@/components/ui/calendar";
 import { format } from "date-fns";
 import { cn } from "@/lib/utils";
-import { IEmailServerRequest } from "@/types/main";
-
-interface ISearchFormProps {
-	onSearch: (data: IEmailServerRequest) => void;
-}
+import { useEmailSearchStore } from "@/store/email.store";
 
 const formSchema = z.object({
 	from: z.email({ error: "Invalid email address" }),
@@ -52,7 +48,8 @@ const formSchema = z.object({
 		),
 });
 
-export default function SearchForm({ onSearch }: ISearchFormProps) {
+export default function SearchForm() {
+	const { triggerSearch } = useEmailSearchStore();
 	const form = useForm<z.infer<typeof formSchema>>({
 		resolver: zodResolver(formSchema),
 		defaultValues: {
@@ -63,7 +60,7 @@ export default function SearchForm({ onSearch }: ISearchFormProps) {
 	});
 
 	function onSubmit(values: z.infer<typeof formSchema>) {
-		onSearch(values);
+		triggerSearch(values);
 	}
 
 	return (
