@@ -3,8 +3,13 @@ import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { RefreshCcwIcon } from "lucide-react";
 import SearchForm from "@/components/search-form";
+import { IEmailServerRequest } from "@/types/main";
 
-export default function SearchCard() {
+interface ISearchCardProps {
+	onSearch: (data: IEmailServerRequest) => void;
+}
+
+export default function SearchCard({ onSearch }: ISearchCardProps) {
 	return (
 		<Card>
 			<CardHeader className="flex flex-row items-center justify-between">
@@ -14,7 +19,7 @@ export default function SearchCard() {
 				</Button>
 			</CardHeader>
 			<CardContent>
-				<SearchForm />
+				<SearchForm onSearch={onSearch} />
 			</CardContent>
 		</Card>
 	);

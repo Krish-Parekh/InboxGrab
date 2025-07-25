@@ -4,32 +4,32 @@ import { act, fireEvent, render, screen } from "@testing-library/react";
 
 describe("SearchForm", () => {
 	it("should render the search form", () => {
-		const { container } = render(<SearchForm />);
+		const { container } = render(<SearchForm onSearch={() => {}} />);
 		expect(container).toBeInTheDocument();
 	});
 
 	it("should render the form label for from field", () => {
-		render(<SearchForm />);
+		render(<SearchForm onSearch={() => {}} />);
 		expect(screen.getByLabelText("From")).toBeInTheDocument();
 	});
 
 	it("should render the form input for from field", () => {
-		render(<SearchForm />);
+		render(<SearchForm onSearch={() => {}} />);
 		expect(screen.getByPlaceholderText("From")).toBeInTheDocument();
 	});
 
 	it("should render the form label for start date field", () => {
-		render(<SearchForm />);
+		render(<SearchForm onSearch={() => {}} />);
 		expect(screen.getByLabelText("Start Date")).toBeInTheDocument();
 	});
 
 	it("should render the form label for end date field", () => {
-		render(<SearchForm />);
+		render(<SearchForm onSearch={() => {}} />);
 		expect(screen.getByLabelText("End Date")).toBeInTheDocument();
 	});
 
 	it("should show validation on submitting empty form", async () => {
-		render(<SearchForm />);
+		render(<SearchForm onSearch={() => {}} />);
 		await act(async () => {
 			fireEvent.click(screen.getByRole("button", { name: "Search" }));
 		});
@@ -37,7 +37,7 @@ describe("SearchForm", () => {
 	});
 
 	it("should show validation on submitting invalid email", async () => {
-		render(<SearchForm />);
+		render(<SearchForm onSearch={() => {}} />);
 		await act(async () => {
 			fireEvent.change(screen.getByPlaceholderText("From"), {
 				target: { value: "invalid-email" },

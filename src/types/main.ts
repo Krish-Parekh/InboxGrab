@@ -1,3 +1,14 @@
+export interface IEmailServerRequest {
+	from: string;
+	startDate: Date;
+	endDate: Date;
+}
+
+export interface IEmailServerResponse {
+	emails: IEmailResponse[];
+	message: string;
+}
+
 export interface IEmailResponse {
 	id: string;
 	threadId: string;
