@@ -109,7 +109,7 @@ function tranformMessageDetails(
 			const attachments = messageDetail.payload?.parts
 				?.map((part: IPart) => {
 					return {
-						id: part.partId,
+						id: part.body.attachmentId || "",
 						filename: part.filename,
 						mimeType: part.mimeType,
 						size: part.body.size,

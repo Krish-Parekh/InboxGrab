@@ -9,19 +9,14 @@ import { Button } from "./ui/button";
 interface IEmailTableProps {
 	data?: IEmailServerResponse;
 	isLoading: boolean;
-	onDownloadAll: () => void;
 }
 
-export default function EmailTable({
-	data,
-	isLoading,
-	onDownloadAll,
-}: IEmailTableProps) {
+export default function EmailTable({ data, isLoading }: IEmailTableProps) {
 	return (
 		<Card>
 			<CardHeader className="flex flex-row items-center justify-between">
 				<CardTitle>Emails</CardTitle>
-				<Button variant="outline" onClick={onDownloadAll}>
+				<Button variant="outline">
 					<Download className="w-4 h-4" /> Download All
 				</Button>
 			</CardHeader>

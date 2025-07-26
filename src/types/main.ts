@@ -9,6 +9,11 @@ export interface IEmailServerResponse {
 	message: string;
 }
 
+export interface IEmailDownloadRequest {
+	messageId: string;
+	attachmentId: string;
+}
+
 export interface IEmailResponse {
 	id: string;
 	threadId: string;

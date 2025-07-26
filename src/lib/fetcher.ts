@@ -18,6 +18,12 @@ async function fetcher({ url, init, error }: IFetcher) {
 			throw new Error(response.statusText);
 		}
 
+		const contentType = response.headers.get("content-type");
+
+		if (contentType?.includes("application/zip")) {
+			return await response.blob();
+		}
+
 		return response.json();
 	} catch (err) {
 		if (err instanceof Error) {
