@@ -29,20 +29,9 @@ jobs:
       - name: Patch SWC and LightningCSS
         run: npx next --help
 
-      - name: Run tests with coverage
-        run: npm test -- --coverage
+      - name: Run tests 
+        run: npm run test
       
-      - name: Upload coverage report
-        uses: actions/upload-artifact@v4
-        with:
-          name: coverage-report
-          path: coverage
-      
-      - name: Deploy coverage report and badge to GitHub Pages
-        uses: JamesIves/github-pages-deploy-action@v4
-        with:
-          folder: coverage 
-
       - name: Upload project snapshot
         uses: actions/upload-artifact@v4
         with:
