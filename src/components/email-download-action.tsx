@@ -12,23 +12,25 @@ export default function EmailDownloadAction({
 	email,
 }: IEmailDownloadActionProps) {
 	const [isDownloading, setIsDownloading] = useState(false);
-	const messageId = email.id;
-	const attachmentIds = email.attachments.map((attachment) => attachment.id);
-
-	const attachments: IEmailDownloadRequest[] = attachmentIds.map(
-		(attachmentId) => ({
-			messageId,
-			attachmentId,
-			date: email.date,
-			subject: email.subject,
-		}),
-	);
 
 	const { downloadAttachments } = useEmailSearchStore();
 
 	const handleDownload = async () => {
 		setIsDownloading(true);
+
+		const messageId = email.id;
+		const attachmentIds = email.attachments.map((attachment) => attachment.id);
+
+		const attachments: IEmailDownloadRequest[] = attachmentIds.map(
+			(attachmentId) => ({
+				messageId,
+				attachmentId,
+				date: email.date,
+				subject: email.subject,
+			}),
+		);
 		await downloadAttachments(attachments);
+
 		setIsDownloading(false);
 	};
 
@@ -40,9 +42,9 @@ export default function EmailDownloadAction({
 			disabled={isDownloading}
 		>
 			{isDownloading ? (
-				<Loader2 className="w-4 h-4 animate-spin" />
+				<Loader2 data-testid="loader-icon" className="w-4 h-4 animate-spin" />
 			) : (
-				<Download className="w-4 h-4" />
+				<Download className="w-4 h-4" data-testid="download-icon" />
 			)}
 			Download
 		</Button>

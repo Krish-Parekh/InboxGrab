@@ -14,6 +14,7 @@ import {
 } from "@/types/main";
 import { useEmailSearchStore } from "@/store/email.store";
 import { useEffect } from "react";
+import { downloadAttachments } from "@/lib/download";
 
 const URLs = {
 	SEARCH: "/api/email",
@@ -32,21 +33,11 @@ export default function Home() {
 	>(URLs.DOWNLOAD);
 
 	const handleDownload = async (attachments: IEmailDownloadRequest[]) => {
-		try {
-			const blob = await triggerDownload(attachments);
-
-			const url = window.URL.createObjectURL(blob);
-			const link = document.createElement("a");
-			link.href = url;
-			link.download = "attachments.zip";
-			document.body.appendChild(link);
-			link.click();
-
-			window.URL.revokeObjectURL(url);
-			document.body.removeChild(link);
-		} catch (error) {
-			console.error("Download failed:", error);
-		}
+		downloadAttachments({
+			attachments,
+			triggerDownload,
+			filename: "emails.zip",
+		});
 	};
 
 	useEffect(() => {

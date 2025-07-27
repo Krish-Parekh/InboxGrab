@@ -35,8 +35,8 @@ export default function EmailTable({ data, isLoading }: IEmailTableProps) {
 
 		if (attachments) {
 			await downloadAttachments(attachments);
-			setIsDownloading(false);
 		}
+		setIsDownloading(false);
 	};
 	return (
 		<Card>
@@ -48,9 +48,12 @@ export default function EmailTable({ data, isLoading }: IEmailTableProps) {
 					disabled={isDownloading}
 				>
 					{isDownloading ? (
-						<Loader2 className="w-4 h-4 animate-spin" />
+						<Loader2
+							className="w-4 h-4 animate-spin"
+							data-testid="download-loader-icon"
+						/>
 					) : (
-						<Download className="w-4 h-4" />
+						<Download className="w-4 h-4" data-testid="download-icon" />
 					)}
 					Download All
 				</Button>
@@ -58,7 +61,10 @@ export default function EmailTable({ data, isLoading }: IEmailTableProps) {
 			<CardContent>
 				{isLoading ? (
 					<div className="flex justify-center items-center h-full">
-						<Loader2 className="w-4 h-4 animate-spin" />
+						<Loader2
+							className="w-4 h-4 animate-spin"
+							data-testid="loader-icon"
+						/>
 					</div>
 				) : (
 					<DataTable columns={columns} data={data?.emails || []} />
