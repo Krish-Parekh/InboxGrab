@@ -46,7 +46,12 @@ describe("downloadAttachments", () => {
 
 	it("calls triggerDownload and downloads the file", async () => {
 		const attachments: IEmailDownloadRequest[] = [
-			{ messageId: "1", attachmentId: "a1", date: new Date().toISOString(), subject: "test" },
+			{
+				messageId: "1",
+				attachmentId: "a1",
+				date: new Date().toISOString(),
+				subject: "test",
+			},
 		];
 
 		await downloadAttachments({
