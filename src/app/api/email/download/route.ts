@@ -7,12 +7,31 @@ const requestFormSchema = z
 	.object({
 		messageId: z.string(),
 		attachmentId: z.string(),
+		date: z.string(),
+		subject: z.string(),
 	})
 	.array();
 
 const URLs = {
 	GET_MESSAGES: "/users/me/messages",
 };
+
+function sanitizeFilename(input: string): string {
+	return input
+		.replace(/[\\/:*?"<>|]/g, "_")
+		.replace(/\s+/g, "_")
+		.substring(0, 50);
+}
+
+function formatEmailDate(dateStr: string): string {
+	const date = new Date(dateStr);
+	if (isNaN(date.getTime())) return "invalid-date";
+	const day = String(date.getDate()).padStart(2, "0");
+	const month = String(date.getMonth() + 1).padStart(2, "0");
+	const year = date.getFullYear();
+	return `${day}-${month}-${year}`;
+}
+
 async function getAttachment(
 	token: string,
 	messageId: string,
@@ -71,17 +90,20 @@ async function POST(request: NextRequest) {
 				);
 				return {
 					name: email.messageId,
+					date: email.date,
+					subject: email.subject,
 					data: attachment,
 				};
 			}),
 		);
 		const zip = new JSZip();
 
-		let counter = 0;
 		for (const attachment of attachments) {
-			const fileName = `${attachment.name}-${counter}.pdf`;
+			const safeSubject = sanitizeFilename(attachment.subject);
+			const formattedDate = formatEmailDate(attachment.date);
+			const safeDate = sanitizeFilename(formattedDate);
+			const fileName = `${safeDate}_${safeSubject}.pdf`;
 			zip.file(fileName, attachment.data, { base64: true });
-			counter++;
 		}
 
 		const zipBlob = await zip.generateAsync({ type: "blob" });

@@ -15,22 +15,25 @@ import {
 import { useEmailSearchStore } from "@/store/email.store";
 import { useEffect } from "react";
 
-const URL = "/api/email";
-const DOWNLOAD_URL = "/api/email/download";
+const URLs = {
+	SEARCH: "/api/email",
+	DOWNLOAD: "/api/email/download",
+};
 
 export default function Home() {
 	const { data, isMutating, trigger } = useEmailServerMutation<
 		IEmailServerRequest,
 		IEmailServerResponse
-	>(URL);
+	>(URLs.SEARCH);
 
-	const { trigger: triggerDownload, isMutating: isDownloading } =
-		useEmailServerMutation<IEmailDownloadRequest[], any>(DOWNLOAD_URL);
+	const { trigger: triggerDownload } = useEmailServerMutation<
+		IEmailDownloadRequest[],
+		Blob
+	>(URLs.DOWNLOAD);
 
 	const handleDownload = async (attachments: IEmailDownloadRequest[]) => {
 		try {
 			const blob = await triggerDownload(attachments);
-			console.log("Blob: ", blob);
 
 			const url = window.URL.createObjectURL(blob);
 			const link = document.createElement("a");

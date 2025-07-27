@@ -8,8 +8,10 @@ type EmailSearchStore = {
 };
 
 type EmailDownloadStore = {
-	downloadAttachments: (data: IEmailDownloadRequest[]) => void;
-	setDownloadAttachments: (fn: (data: IEmailDownloadRequest[]) => void) => void;
+	downloadAttachments: (data: IEmailDownloadRequest[]) => Promise<void>;
+	setDownloadAttachments: (
+		fn: (data: IEmailDownloadRequest[]) => Promise<void>,
+	) => void;
 };
 
 export const useEmailSearchStore = create<
@@ -17,6 +19,6 @@ export const useEmailSearchStore = create<
 >((set) => ({
 	triggerSearch: () => {},
 	setTriggerSearch: (fn) => set({ triggerSearch: fn }),
-	downloadAttachments: () => {},
+	downloadAttachments: async () => {},
 	setDownloadAttachments: (fn) => set({ downloadAttachments: fn }),
 }));

@@ -12,6 +12,8 @@ export interface IEmailServerResponse {
 export interface IEmailDownloadRequest {
 	messageId: string;
 	attachmentId: string;
+	date: string;
+	subject: string;
 }
 
 export interface IEmailResponse {
