@@ -31,20 +31,18 @@ jobs:
 
       - name: Run tests with coverage
         run: npm test -- --coverage
-
-      - name: Install badge generator
-        run: npm install -g gen-badge
       
-      - name: Generate coverage badge
-        run: |
-          mkdir -p coverage/badges
-          gen-badge --input ./coverage/coverage-summary.json --output ./coverage/badges/coverage.svg
+      - name: Upload coverage report
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-report
+          path: coverage
       
       - name: Deploy coverage report and badge to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4
         with:
           folder: coverage 
-          
+
       - name: Upload project snapshot
         uses: actions/upload-artifact@v4
         with:
