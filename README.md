@@ -1,6 +1,8 @@
 
 # Inbox Grabber
 
+[![GitHub Actions CI](https://github.com/Krish-Parekh/InboxGrab/actions/workflows/ci.yml/badge.svg)](https://github.com/Krish-Parekh/InboxGrab/actions/workflows/ci.yml)
+
 Inbox Grabber is a tool designed to solve a simple yet frustrating problem: downloading all attachments from a specific sender on Gmail at once. This project was born out of the tedious experience of manually downloading countless invoices for tax purposes, a task that should be straightforward but isn't.
 
 The motivation to create this project was reinforced by discussions like this [Reddit post](https://www.reddit.com/r/GMail/comments/1h5hjcz/downloading_all_attachments_from_multiple_emails/), where it's clear many users face the same issue.
@@ -97,3 +99,7 @@ If you have a suggestion that would make this better, please fork the repo and c
 3.  Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
 4.  Push to the Branch (`git push origin feature/AmazingFeature`)
 5.  Open a Pull Request
+
+## License
+
+Distributed under the MIT License. See `LICENSE` for more information.
